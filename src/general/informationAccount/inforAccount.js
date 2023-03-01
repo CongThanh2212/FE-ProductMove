@@ -12,8 +12,7 @@ class InforAccount extends React.Component {
         this.state = {
             constName: '',
             constAddress: '',
-            constPhone: '',
-            constDes: ''
+            constPhone: ''
         }
         this.update = this.update.bind(this);
         this.edit = this.edit.bind(this);
@@ -37,18 +36,16 @@ class InforAccount extends React.Component {
         const name = document.getElementById('name').value;
         const address = document.getElementById('address').value;
         const phone = document.getElementById('phone').value;
-        const description = document.getElementById('description').value;
 
-        if (!name || !address || !phone || !description) {
+        if (!name || !address || !phone) {
             error.innerHTML = 'Bạn chưa nhập hết các thông tin cần chỉnh sửa';
             return;
         }
 
         // So sánh với các state nếu không có thay đổi gì thì hiện thông báo. Ngược lại có thay đổi thì gửi request lên server
-        if (name === this.state.constName && address === this.state.constAddress && phone === this.state.constPhone
-            && description === this.state.constDes) {
-                error.innerHTML = 'Bạn chưa thay đổi thông tin nào';
-                return;
+        if (name === this.state.constName && address === this.state.constAddress && phone === this.state.constPhone) {
+            error.innerHTML = 'Bạn chưa thay đổi thông tin nào';
+            return;
         }
 
         const xmlHttp = new XMLHttpRequest();
@@ -56,26 +53,24 @@ class InforAccount extends React.Component {
             if (this.responseText === 4) {
                 if (this.status === 200) {
                     error.innerHTML = '';
+                    alert('Thay đổi thông tin thành công');
                     // Thành công thì cập nhật giá trị các state
                     root.setState({
                         constName: name,
                         constAddress: address,
-                        constPhone: phone,
-                        constDes: description
+                        constPhone: phone
                     })
                 }
             }
         }
-        xmlHttp.open('POST', URL + '/auth/edit_profile', false);
+        xmlHttp.open('POST', URL + '/general/edit-account-profile', false);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlHttp.send(
-            'id_user=' + this.props.id
+            'id=' + this.props.id
             + '&name=' + name
             + '&address=' + address
             + '&phone=' + phone
-            + '&bio=' + description
         )
-        alert('Thay đổi thông tin thành công')
     }
 
     // Lấy ra thông tin chi tiết của account đang đăng nhập
@@ -85,17 +80,15 @@ class InforAccount extends React.Component {
         xmlHttp.onreadystatechange = function() {
             if (this.readyState === 4) {
                 if (this.status === 200) {
-                    const data = JSON.parse(this.responseText);
+                    const data = JSON.parse(this.responseText)[0];
                     if (data === null) return;
-                    var name = '', address = '', phone = '', description = '';
+                    var name = '', address = '', phone = '';
                     if (data.name) {
                         name = data.name;
                         document.getElementById('name').value = name;
                     }
-                    if (data.username) document.getElementById('username').value = data.username;
-                    else document.getElementById('username').value = '';
-                    if (data.type_user) document.getElementById('type').value = data.type_user;
-                    else document.getElementById('type').value = '';
+                    document.getElementById('username').value = data.userName;
+                    document.getElementById('type').value = data.type;
                     if (data.email) document.getElementById('email').value = data.email;
                     else document.getElementById('email').value = '';
                     if (data.address) {
@@ -106,20 +99,15 @@ class InforAccount extends React.Component {
                         phone = data.phone;
                         document.getElementById('phone').value = phone;
                     }
-                    if (data.bio) {
-                        description = data.bio;
-                        document.getElementById('description').value = description;
-                    }
                     root.setState({
                         constName: name,
                         constAddress: address,
-                        constPhone: phone,
-                        constDes: description
+                        constPhone: phone
                     })
                 }
             }
         }
-        xmlHttp.open('GET', URL + '/auth/my_profile?id_user=' + this.props.id, false);
+        xmlHttp.open('GET', URL + '/general/account-profile?id=' + this.props.id, false);
         xmlHttp.send(null);
     }
 
@@ -156,10 +144,6 @@ class InforAccount extends React.Component {
 
                 <label htmlFor='phone'>Số điện thoại</label>
                 <input type='phone' id='phone' name='phone' readOnly></input><i className="fas fa-edit" onClick={this.edit}></i>
-                <br></br>
-
-                <label htmlFor='description'>Thông tin thêm</label>
-                <textarea id="description" name='description' readOnly></textarea><i className="fas fa-edit" onClick={this.edit}></i>
                 <br></br>
 
                 <span className='errProfile'></span>

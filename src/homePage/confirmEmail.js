@@ -27,7 +27,7 @@ class ConfirmEmail extends React.Component {
         this.props.changeInterfaceType(event.target.innerHTML);
     }
 
-    // Lấy email user nhập vào kiểm tra email và gửi requesr lên server
+    // Lấy email user nhập vào kiểm tra email và gửi request lên server
     enterEmail(event) {
         event.preventDefault();
         var email = document.getElementById('email').value;
@@ -57,10 +57,10 @@ class ConfirmEmail extends React.Component {
                 }
             }
         }
-        xmlHttp.open('POST', URL + '/auth/confirm_email', false);
+        xmlHttp.open('POST', URL + '/general/confirm-email', false);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlHttp.send(
-            'id_user=' + this.props.id
+            'id=' + this.props.id
             + '&email=' + email
         )
     }
@@ -87,10 +87,10 @@ class ConfirmEmail extends React.Component {
                 } else error.innerHTML = 'Mã OTP không chính xác' // Không thành công thì hiển thị lỗi
             }
         }
-        xmlHttp.open('POST', URL + '/auth/regit_email', false);
+        xmlHttp.open('POST', URL + '/general/verification-and-update-email', false);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlHttp.send(
-            'id_user=' + this.props.id
+            'id=' + this.props.id
             + '&otp=' + otp
         )
     }

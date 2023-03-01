@@ -17,8 +17,11 @@ class Storage extends React.Component {
         - changeTypeProfile: Chuyển sang xem chi tiết sản phẩm (Details)
     */
     show(event) {
-        const productId = event.parentNode.firstChild.nextSibling.innerHTML;
-        this.props.changeProductId(productId);
+        const id = event.parentNode.firstChild;
+        this.props.changeBatchId(id.nextSibling.nextSibling.innerHTML);
+        this.props.changeImportId(id.nextSibling.innerHTML);
+        this.props.changeProductId(id.innerHTML);
+        this.props.changeOldId('');
         this.props.changeBackType('Trong kho');
         this.props.changeTypeProfile('Xem');
     }
@@ -27,86 +30,50 @@ class Storage extends React.Component {
         Xử lý event khi trung tâm bảo hành click vào chuyển đi
     */
     sendToProducer(event) {
-        event.preventDefault();
-        var error1 = document.getElementsByClassName('errRepair1')[0]; // span hiển thị lỗi
-        var error2 = document.getElementsByClassName('errRepair2')[0]; // span hiển thị lỗi
-        error1.innerHTML = '';
-        error2.innerHTML = '';
-        // Mảng tr có phần tử đầu tiên là th
-        var tr = document.querySelectorAll("tr");
-        var countChecked = 0; // Đếm số lượng sản phẩm checked
-        for (var i = 1; i < tr.length; i++) {
-            if (tr[i].firstChild.firstChild.checked) {
-                const prId = tr[i].firstChild.nextSibling.innerHTML;
-                const xmlHttp = new XMLHttpRequest();
-                xmlHttp.onreadystatechange = function() {
-                    if (this.readyState === 4) {
-                        if (this.status === 200) {
-                            
-                        }
-                    }
-                }
-                xmlHttp.open('POST', URL + '/service/send_product_to_factory', false);
-                xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xmlHttp.send(
-                    'id_product=' + prId
-                )
-                countChecked++;
-            }
-        }
-        if (countChecked === 0) error2.innerHTML = 'Bạn chưa chọn sản phẩm nào';
-        else {
-            alert("Chuyển hàng thành công!\nSản phẩm đã được chuyển vào mục không thể sửa\nBạn hãy chờ cơ sở sản xuất xác nhận");
-            var tbody = document.querySelector('tbody');
-            for (var j = tr.length - 1; j > 0; j--) {
-                if (tr[j].firstChild.firstChild.checked) {
-                    tbody.removeChild(tr[j]);
+        const prId = event.parentNode.firstChild.nextSibling.innerHTML;
+        const producerId = event.parentNode.lastChild.innerHTML;
+        const xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (this.readyState === 4) {
+                if (this.status === 200) {
+                    alert("Chuyển hàng thành công!\nSản phẩm đã được chuyển vào mục không thể sửa\nBạn hãy chờ cơ sở sản xuất xác nhận");
                 }
             }
         }
+        xmlHttp.open('POST', URL + '/service/send-fail', false);
+        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlHttp.send(
+            'serviceId=' +  this.props.id
+            + '&producerId=' + producerId
+            + '&productId=' + prId
+            + '&date=' + document.getElementById('date').value
+        )
     }
 
     /*
         Xử lý event khi trung tâm bảo hành click vào trả về
     */
     returnAgent(event) {
-        event.preventDefault();
-        var error1 = document.getElementsByClassName('errRepair1')[0]; // span hiển thị lỗi
-        var error2 = document.getElementsByClassName('errRepair2')[0]; // span hiển thị lỗi
-        error1.innerHTML = '';
-        error2.innerHTML = '';
-        // Mảng tr có phần tử đầu tiên là th
-        var tr = document.querySelectorAll("tr");
-        var countChecked = 0; // Đếm số lượng sản phẩm checked
-        for (var i = 1; i < tr.length; i++) {
-            if (tr[i].firstChild.firstChild.checked) {
-                const prId = tr[i].firstChild.nextSibling.innerHTML;
-                const xmlHttp = new XMLHttpRequest();
-                xmlHttp.onreadystatechange = function() {
-                    if (this.readyState === 4) {
-                        if (this.status === 200) {
-                            
-                        }
-                    }
-                }
-                xmlHttp.open('POST', URL + '/service/send_product_to_agent', false);
-                xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xmlHttp.send(
-                    'id_product=' + prId
-                )
-                countChecked++;
-            }
-        }
-        if (countChecked === 0) error1.innerHTML = 'Bạn chưa chọn sản phẩm nào';
-        else {
-            alert("Trả hàng thành công!\nSản phẩm đã được chuyển vào mục sửa chữa xong\nBạn hãy chờ đại lý xác nhận");
-            var tbody = document.querySelector('tbody');
-            for (var j = tr.length - 1; j > 0; j--) {
-                if (tr[j].firstChild.firstChild.checked) {
-                    tbody.removeChild(tr[j]);
+        const prId = event.parentNode.firstChild.nextSibling.innerHTML;
+        const agentId = event.parentNode.lastChild.previousSibling.innerHTML;
+        const numberOfService = event.parentNode.lastChild.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.innerHTML;
+        const xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (this.readyState === 4) {
+                if (this.status === 200) {
+                    alert("Trả hàng thành công!\nSản phẩm đã được chuyển vào mục sửa chữa xong\nBạn hãy chờ đại lý xác nhận");
                 }
             }
         }
+        xmlHttp.open('POST', URL + '/service/send-fixed', false);
+        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlHttp.send(
+            'serviceId=' + this.props.id
+            + '&agentId=' + agentId
+            + '&productId=' + prId
+            + '&date=' + document.getElementById('date').value
+            + '&numberOfService=' + numberOfService
+        )
     }
 
     // Xử lý event khi 1 row đc checked thì chuyển màu vàng ngược lại chuyển về màu ban đầu
@@ -125,41 +92,69 @@ class Storage extends React.Component {
         xmlHttp.onreadystatechange = function() {
             if (this.readyState === 4) {
                 if (this.status === 200) {
-                    const data = JSON.parse(this.responseText).list;
+                    const data = JSON.parse(this.responseText);
                     var tbody = document.querySelector('tbody');
                     for (var i = 0; i < data.length; i++) {
-                        if (data[i] === null) continue;
                         var tr = document.createElement('tr');
                         var checkbox = document.createElement('td');
                         var input = document.createElement('input');
                         input.type = 'checkbox';
-                        var id = document.createElement('td');
-                        id.className = 'columnId';
+                        var productId = document.createElement('td');
+                        productId.className = 'columnId';
+                        var importBatchId = document.createElement('td');
+                        importBatchId.className = 'columnId';
+                        var batchId = document.createElement('td');
+                        batchId.className = 'columnId';
                         var name = document.createElement('td');
-                        var batch = document.createElement('td');
+                        var capacity = document.createElement('td');
+                        var numberOfService = document.createElement('td');
                         var description = document.createElement('td');
+                        var fail = document.createElement('td');
+                        var fixed = document.createElement('td');
+                        var agentId = document.createElement('td');
+                        agentId.style.hidden = true;
+                        var producerId = document.createElement('td');
+                        producerId.style.hidden = true;
+
+                        productId.innerHTML = data[i].productId;
+                        importBatchId.innerHTML = data[i].importBatchId;
+                        batchId.innerHTML = data[i].batchId;
+                        name.innerHTML = data[i].productLine;
+                        capacity.innerHTML = data[i].capacity;
+                        numberOfService.innerHTML = data[i].numberOfService;
+                        fail.innerHTML = 'Trả về CSSX';
+                        fixed.innerHTML = 'Gửi về ĐL';
+                        description.innerHTML = 'Xem';
+                        agentId.innerHTML = data[i].agentId;
+                        producerId.innerHTML = data[i].producerId;
 
                         checkbox.appendChild(input);
-                        if (data[i]._id) id.innerHTML = data[i]._id;
-                        else id.innerHTML = '';
-                        
-                        if (data[i].name) name.innerHTML = data[i].name;
-                        else name.innerHTML = '';
-                        
-                        if (data[i].batch) batch.innerHTML = data[i].batch;
-                        else batch.innerHTML = '';
-                        
-                        description.innerHTML = 'Xem';
-
                         tr.appendChild(checkbox);
-                        tr.appendChild(id);
+                        tr.appendChild(productId);
+                        tr.appendChild(importBatchId);
+                        tr.appendChild(batchId);
                         tr.appendChild(name);
-                        tr.appendChild(batch);
+                        tr.appendChild(capacity);
+                        tr.appendChild(numberOfService);
+                        tr.appendChild(fail);
+                        tr.appendChild(fixed);
                         tr.appendChild(description);
+                        tr.appendChild(agentId);
+                        tr.appendChild(producerId);
                         tbody.appendChild(tr);
 
                         input.onchange = function() {
                             root.changeBackgorund(this);
+                        }
+
+                        fail.style.cursor = 'pointer';
+                        fail.onclick = function() {
+                            root.sendToProducer(this);
+                        }
+
+                        fixed.style.cursor = 'pointer';
+                        fixed.onclick = function() {
+                            root.returnAgent(this);
                         }
 
                         description.style.cursor = 'pointer';
@@ -170,7 +165,7 @@ class Storage extends React.Component {
                 }
             }
         }
-        xmlHttp.open('GET', URL + '/service/all_fixing_product?id_user=' + this.props.id, false);
+        xmlHttp.open('GET', URL + '/service/list-fixing?serviceId=' + this.props.id, false);
         xmlHttp.send(null);
     }
 
@@ -183,27 +178,23 @@ class Storage extends React.Component {
                     <thead>
                         <tr>
                             <th></th>
-                            <th className="columnId">Id</th>
+                            <th className="columnId">productId</th>
+                            <th className="columnId">importBatchId</th>
+                            <th className="columnId">batchId</th>
                             <th>Tên</th>
-                            <th>Lô</th>
+                            <th>Dung lượng</th>
+                            <th>Lần BH</th>
+                            <th>Lỗi</th>
+                            <th>BH xong</th>
                             <th>Chi tiết</th>
+                            <th hidden>agentId</th>
+                            <th hidden>producerId</th>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
-                <div className="divRepair">
-                    <form className="repair" onSubmit={this.returnAgent}>
-                        <label htmlFor="select">Trả về đại lý: </label>
-                        <span className='errRepair1'></span>
-                        <input type='submit' value='Trả về'></input>
-                    </form>
-                    <form className="repair" onSubmit={this.sendToProducer}>
-                        <label htmlFor="select">Chuyển về cơ sở: </label>
-                        <span className='errRepair2'></span>
-                        <input type='submit' value='Chuyển đi'></input>
-                    </form>
-                </div>
+                <input type='date' id='date'></input>
             </Fragment>
         )
     }

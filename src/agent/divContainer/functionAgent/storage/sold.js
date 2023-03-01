@@ -48,8 +48,11 @@ class Sold extends React.Component {
         - changeTypeProfile: Chuyển sang xem chi tiết sản phẩm (Details)
     */
     show(event) {
-        const productId = event.parentNode.firstChild.nextSibling.innerHTML;
-        this.props.changeProductId(productId);
+        const id = event.parentNode.firstChild.nextSibling;
+        this.props.changeBatchId(id.nextSibling.nextSibling.innerHTML);
+        this.props.changeImportId(id.nextSibling.innerHTML);
+        this.props.changeProductId(id.innerHTML);
+        this.props.changeOldId('');
         this.props.changeBackType('Đã bán');
         this.props.changeTypeProfile('Xem');
     }

@@ -14,8 +14,11 @@ class Received extends React.Component {
         - changeTypeProfile: Chuyển sang xem chi tiết sản phẩm (Details)
     */
     show(event) {
-        const productId = event.parentNode.firstChild.innerHTML;
-        this.props.changeProductId(productId);
+        const id = event.parentNode.firstChild;
+        this.props.changeBatchId(id.nextSibling.nextSibling.innerHTML);
+        this.props.changeImportId(id.nextSibling.innerHTML);
+        this.props.changeProductId('');
+        this.props.changeOldId(id.innerHTML);
         this.props.changeBackType('Đã tiếp nhận');
         this.props.changeTypeProfile('Xem');
     }

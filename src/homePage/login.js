@@ -67,12 +67,12 @@ class Login extends React.Component {
                     }
                     root.props.changeAccountType(type); // Thay đổi UI phù hợp với kiểu tài khoản
                     const cfEmail = data.cfEmail; // Xác định xem account đã có email hay chưa
-                    // Account chưa có email thì chuyển sang UI xác minh email
-                    // if (cfEmail === 0) {
-                    //     root.props.changeInterfaceType("Xác minh email");
-                    //     return;
-                    // }
-                    // Đăng nhập thành công, account đã có email thì chuyển user vào UI làm việc
+                    //Account chưa có email thì chuyển sang UI xác minh email
+                    if (cfEmail === 0) {
+                        root.props.changeInterfaceType("Xác minh email");
+                        return;
+                    }
+                    //Đăng nhập thành công, account đã có email thì chuyển user vào UI làm việc
                     root.setState({
                         access: true
                     })

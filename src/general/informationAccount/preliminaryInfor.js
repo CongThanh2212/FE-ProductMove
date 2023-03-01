@@ -26,10 +26,9 @@ class PreliminaryInfor extends React.Component {
         xmlHttp.onreadystatechange = function() {
             if (this.readyState === 4) {
                 if (this.status === 200) {
-                    const data = JSON.parse(this.responseText);
+                    const data = JSON.parse(this.responseText)[0];
                     if (data === null) return;
                     var arrInput = document.querySelectorAll('input');
-                    var textarea = document.querySelector('textarea');
 
                     if (!data.name) arrInput[0].value = '';
                     else arrInput[0].value = data.name;
@@ -39,16 +38,14 @@ class PreliminaryInfor extends React.Component {
 
                     if (!data.phone) arrInput[2].value = '';
                     else arrInput[2].value = data.phone;
-
-                    if (!data.bio) textarea.value = '';
-                    else textarea.value = data.bio;
                 }
             }
         }
-        xmlHttp.open('POST', URL + '/auth/get_profile_by_name', false);
+        xmlHttp.open('POST', URL + '/general/other-account-profile', false);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlHttp.send(
-            'name=' + this.props.userName
+            'id=' + this.props.id
+            + '&name=' + this.props.userName
         );
     }
 
@@ -69,10 +66,6 @@ class PreliminaryInfor extends React.Component {
 
                     <label htmlFor='phone'>Số điện thoại</label>
                     <input type='phone' id='phone' readOnly></input>
-                    <br></br>
-
-                    <label htmlFor='description'>Thông tin thêm</label>
-                    <textarea id="description" readOnly></textarea>
                     <br></br>
                 </form>
                 <i className='fas fa-arrow-circle-left' onClick={this.back}></i>

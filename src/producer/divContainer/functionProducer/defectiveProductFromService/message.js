@@ -47,8 +47,17 @@ class Message extends React.Component {
         - changeTypeProfile: Chuyển sang xem chi tiết sản phẩm (Details)
     */
     show(event) {
-        const productId = event.parentNode.firstChild.innerHTML;
-        this.props.changeProductId(productId);
+        const status = event.previousSibling.innerHTML;
+        const id = event.parentNode.firstChild;
+        this.props.changeBatchId(id.nextSibling.nextSibling.innerHTML);
+        this.props.changeImportId(id.nextSibling.innerHTML);
+        if (status === 'Lỗi') {
+            this.props.changeProductId('');
+            this.props.changeOldId(id.innerHTML);
+        } else {
+            this.props.changeProductId(id.innerHTML);
+            this.props.changeOldId('');
+        }
         this.props.changeBackType('Thông báo');
         this.props.changeTypeProfile('Xem');
     }

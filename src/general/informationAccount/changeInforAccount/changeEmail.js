@@ -34,10 +34,10 @@ class ChangeEmail extends React.Component {
                 } else alert(this.status); 
             }
         }
-        xmlHttp.open('POST', URL + '/auth/req_change_email', false);
+        xmlHttp.open('POST', URL + '/general/forgot-pass-or-change-email', false);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlHttp.send(
-            'id_user=' + this.props.id
+            'id=' + this.props.id
         )
     }
 
@@ -55,18 +55,22 @@ class ChangeEmail extends React.Component {
         xmlHttp.onreadystatechange = function() {
             if (this.readyState === 4) {
                 if (this.status === 200) {
+                    const data = JSON.parse(this.responseText);
+                    if (!data.access) {
+                        error.innerHTML = data.mess;
+                        return;
+                    }
                     // Thành công thì ẩn UI hiện tại và hiển thị UI bước tiếp theo
                     var formChild2 = document.querySelector('main').firstChild.nextSibling;
                     formChild2.style.display = 'none';
                     formChild2.nextSibling.style.display = 'block';
-                } else error.innerHTML = 'Mã OTP không chính xác' // Không thành công thì hiển thị lỗi
+                }
             }
         }
-        xmlHttp.open('POST', URL + '/auth/regit_email', false);
+        xmlHttp.open('POST', URL + '/general/forgot-pass-or-change-email-verification', false);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlHttp.send(
-            'id_user=' + this.props.id
-            + '&otp=' + otp
+            + 'otp=' + otp
         )
     }
 
@@ -89,22 +93,23 @@ class ChangeEmail extends React.Component {
         xmlHttp.onreadystatechange = function() {
             if (this.readyState === 4) {
                 if (this.status === 200) {
+                    const data = JSON.parse(this.responseText);
+                    if (!data.access) {
+                        error.innerHTML = data.mess;
+                        return;
+                    }
                     alert('Mã OTP đã được gửi đến email của bạn');
                     // Thành công thì ẩn UI hiện tại và hiển thị UI bước tiếp theo
                     var formChild3 = document.querySelector('main').firstChild.nextSibling.nextSibling;
                     formChild3.style.display = 'none';
                     formChild3.nextSibling.style.display = 'block';
-                } else {
-                    // Không thành công thì hiển thị lỗi
-                    const data = JSON.parse(this.responseText);
-                    error.innerHTML = data.errorMessage;
                 }
             }
         }
-        xmlHttp.open('POST', URL + '/auth/confirm_email', false);
+        xmlHttp.open('POST', URL + '/general/confirm-email', false);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlHttp.send(
-            'id_user=' + this.props.id
+            'id=' + this.props.id
             + '&email=' + newEmail
         )
     }
@@ -123,18 +128,23 @@ class ChangeEmail extends React.Component {
         xmlHttp.onreadystatechange = function() {
             if (this.readyState === 4) {
                 if (this.status === 200) {
+                    const data = JSON.parse(this.responseText);
+                    if (!data.access) {
+                        error.innerHTML = data.mess;
+                        return;
+                    }
                     alert('Thay đổi email thành công')
                     // Thành công thì ẩn UI hiện tại và quay lại hiển thị UI bước đầu tiên
                     var main = document.querySelector('main');
                     main.lastChild.style.display = 'none';
                     main.firstChild.style.display = 'block';
-                } else error.innerHTML = 'Mã OTP không chính xác' // Không thành công thì hiển thị lỗi
+                }
             }
         }
-        xmlHttp.open('POST', URL + '/auth/regit_email', false);
+        xmlHttp.open('POST', URL + '/general/verification-and-update-email', false);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlHttp.send(
-            'id_user=' + this.props.id
+            'id=' + this.props.id
             + '&otp=' + otp
         )
     }

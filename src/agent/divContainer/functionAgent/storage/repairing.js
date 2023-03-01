@@ -14,8 +14,11 @@ class Repairing extends React.Component {
         - changeTypeProfile: Chuyển sang xem chi tiết sản phẩm (Details)
     */
     show(event) {
-        const productId = event.parentNode.firstChild.innerHTML;
-        this.props.changeProductId(productId);
+        const id = event.parentNode.firstChild;
+        this.props.changeBatchId(id.nextSibling.nextSibling.innerHTML);
+        this.props.changeImportId(id.nextSibling.innerHTML);
+        this.props.changeProductId(id.innerHTML);
+        this.props.changeOldId('');
         this.props.changeBackType('Đem đi bảo hành');
         this.props.changeTypeProfile('Xem');
     }

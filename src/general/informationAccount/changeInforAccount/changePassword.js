@@ -30,12 +30,11 @@ class ChangePassword extends React.Component {
                 }
             }
         }
-        xmlHttp.open('POST', URL + '/auth/change_password', false);
+        xmlHttp.open('POST', URL + '/general/change-pass', false);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlHttp.send(
-            'id_user=' + this.props.id
+            'id=' + this.props.id
             + '&password=' + newPassword
-            + '&repassword=' + repassword
         )
     }
 

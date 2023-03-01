@@ -50,9 +50,12 @@ class FunctionAgent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            productId: 'none', // lưu trữ id sản phẩm được hiển thị
-            userName: 'none', // lưu trữ username tài khoản khác để xem
-            backType: 'none' // lưu trữ trang quay lại
+            batchId: '', // lưu trữ id sản phẩm được hiển thị
+            importId: '', // lưu trữ id sản phẩm được hiển thị
+            productId: '', // lưu trữ id sản phẩm được hiển thị
+            oldId: '', // lưu trữ id sản phẩm được hiển thị
+            userName: '', // lưu trữ username tài khoản khác/ customerId để xem
+            backType: '' // lưu trữ trang quay lại
         }
         this.changeProductId = this.changeProductId.bind(this);
         this.changeUserName = this.changeUserName.bind(this);
@@ -65,9 +68,27 @@ class FunctionAgent extends React.Component {
         })
     }
 
+    changeBatchId(id) {
+        this.setState({
+            batchId: id
+        })
+    }
+
+    changeImportId(id) {
+        this.setState({
+            importId: id
+        })
+    }
+
     changeProductId(id) {
         this.setState({
             productId: id
+        })
+    }
+
+    changeOldId(id) {
+        this.setState({
+            oldId: id
         })
     }
 
@@ -83,28 +104,37 @@ class FunctionAgent extends React.Component {
         // Hiển thị component tương ứng với type mà DivContainer truyền vào
         switch(type) {
             case "Sản phẩm mới": return <Storage changeTypeProfile={this.props.changeType} id={this.props.id}
-                changeProductId={this.changeProductId} changeProducts={this.props.changeProducts}
-                changeBackType={this.changeBackType}/>
-            case "Đã bán": return <Sold changeTypeProfile={this.props.changeType} id={this.props.id}
-                changeProductId={this.changeProductId} changeBackType={this.changeBackType}/>
+                changeProducts={this.props.changeProducts} changeBackType={this.changeBackType} changeBatchId={this.changeBatchId} 
+                changeImportId={this.changeImportId} changeProductId={this.changeProductId} changeOldId={this.changeOldId}/>
+            case "Đã bán": return <Sold changeTypeProfile={this.props.changeType} id={this.props.id} changeBackType={this.changeBackType}
+                changeBatchId={this.changeBatchId} changeImportId={this.changeImportId} changeProductId={this.changeProductId} 
+                changeOldId={this.changeOldId}/>
             case "Trả lại cho khách hàng": return <ReturnCustomer changeTypeProfile={this.props.changeType}
-                id={this.props.id} changeProductId={this.changeProductId} changeBackType={this.changeBackType}/>
+                id={this.props.id} changeBackType={this.changeBackType} changeBatchId={this.changeBatchId} 
+                changeImportId={this.changeImportId} changeProductId={this.changeProductId} changeOldId={this.changeOldId}/>
             case "Trả lại cơ sở sản xuất": return <ReturnProducer changeTypeProfile={this.props.changeType}
-                id={this.props.id} changeProductId={this.changeProductId} changeBackType={this.changeBackType}/>
+                id={this.props.id} changeBackType={this.changeBackType} changeBatchId={this.changeBatchId} 
+                changeImportId={this.changeImportId} changeProductId={this.changeProductId} changeOldId={this.changeOldId}/>
             case "Đem đi bảo hành": return <Repairing changeTypeProfile={this.props.changeType}
-                id={this.props.id} changeProductId={this.changeProductId} changeBackType={this.changeBackType}/>
-            case "Triệu hồi": return <Recall changeTypeProfile={this.props.changeType} id={this.props.id}
-                changeProductId={this.changeProductId} changeBackType={this.changeBackType}/>
+                id={this.props.id} changeBackType={this.changeBackType} changeBatchId={this.changeBatchId}
+                changeImportId={this.changeImportId} changeProductId={this.changeProductId} changeOldId={this.changeOldId}/>
+            case "Triệu hồi": return <Recall changeTypeProfile={this.props.changeType} id={this.props.id} changeBackType={this.changeBackType}
+                changeBatchId={this.changeBatchId} changeImportId={this.changeImportId} changeProductId={this.changeProductId} 
+                changeOldId={this.changeOldId}/>
             case "Sản phẩm mới về": return <NewProduct changeTypeProfile={this.props.changeType} id={this.props.id}
-                changeProductId={this.changeProductId} changeBackType={this.changeBackType}/>
+                changeBackType={this.changeBackType} changeBatchId={this.changeBatchId} 
+                changeImportId={this.changeImportId} changeProductId={this.changeProductId} changeOldId={this.changeOldId}/>
             case "Sản phẩm bảo hành": return <Fixed changeTypeProfile={this.props.changeType} id={this.props.id}
-                changeProductId={this.changeProductId} changeBackType={this.changeBackType}/>
-            case "Xem": return <Details changeTypeProfile={this.props.changeType} productId={this.state.productId}
-                changeUserName={this.changeUserName} backType={this.state.backType}/>
+                changeBackType={this.changeBackType} changeBatchId={this.changeBatchId}
+                changeImportId={this.changeImportId} changeProductId={this.changeProductId} changeOldId={this.changeOldId}/>
+            case "Xem": return <Details changeTypeProfile={this.props.changeType} id={this.props.id}
+                changeUserName={this.changeUserName} backType={this.state.backType} batchId={this.state.batchId} 
+                importId={this.state.importId} productId={this.state.productId} oldId={this.state.oldId}/>
             case "Sản phẩm lỗi": return <Fail changeTypeProfile={this.props.changeType} id={this.props.id}
-                changeProductId={this.changeProductId} changeBackType={this.changeBackType}/>
-            case "Vị trí kho": return <PreliminaryInfor userName={this.state.userName} changeTypeProfile={this.props.changeType}/>
-            case "Khách hàng": return <CustomerInfor productId={this.state.productId} changeTypeProfile={this.props.changeType}/>
+                changeBackType={this.changeBackType} changeBatchId={this.changeBatchId} 
+                changeImportId={this.changeImportId} changeProductId={this.changeProductId} changeOldId={this.changeOldId}/>
+            case "Vị trí kho": return <PreliminaryInfor id={this.props.id} userName={this.state.userName} changeTypeProfile={this.props.changeType}/>
+            case "Khách hàng": return <CustomerInfor id={this.props.id} userName={this.state.userName} changeTypeProfile={this.props.changeType}/>
             case "Nhập thông tin khách hàng": return <CustomerInput arrProduct={this.props.arrProduct}
                 changeTypeProfile={this.props.changeType}/>
             case "Nhập về": return <StatusStatistical id={this.props.id}/>

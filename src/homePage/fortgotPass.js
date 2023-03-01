@@ -27,7 +27,7 @@ class ForgotPass extends React.Component {
         this.props.changeInterfaceType('Đăng nhập');
     }
 
-    // Lấy email user nhập vào kiểm tra email và gửi requesr lên server
+    // Lấy email user nhập vào kiểm tra email và gửi request lên server
     enterEmail(event) {
         event.preventDefault();
         var email = document.getElementById('email').value;
@@ -46,19 +46,20 @@ class ForgotPass extends React.Component {
         xmlHttp.onreadystatechange = function() {
             if (this.readyState === 4) {
                 if (this.status === 200) {
+                    const data = JSON.parse(this.responseText);
+                    if (!data.access) {
+                        error.innerHTML = data.mess;
+                        return;
+                    }
                     alert('Mã OTP đã được gửi đến email của bạn');
                     // Thành công thì ẩn UI hiện tại và hiển thị UI bước tiếp theo
                     var formChild1 = document.getElementById('root').firstChild;
                     formChild1.style.display = 'none';
                     formChild1.nextSibling.style.display = 'block';
-                } else {
-                    // Không thành công thì hiển thị lỗi
-                    const data = JSON.parse(this.responseText);
-                    error.innerHTML = data.errorMessage;
                 }
             }
         }
-        xmlHttp.open('POST', URL + '/auth/forget_password', false);
+        xmlHttp.open('POST', URL + '/general/forgot-pass-or-change-email', false);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlHttp.send(
             'email=' + email
@@ -80,12 +81,17 @@ class ForgotPass extends React.Component {
         xmlHttp.onreadystatechange = function() {
             if (this.readyState === 4) {
                 if (this.status === 200) {
+                    const data = JSON.parse(this.responseText);
+                    if (!data.access) {
+                        error.innerHTML = data.mess;
+                        return;
+                    }
                     /*
                         Thành công => Lưu lại id server trả về để thực hiện bước tiếp theo
                         và ẩn UI hiện tại, hiển thị UI bước tiếp theo
                     */
                     root.setState({
-                        id: JSON.parse(this.responseText).id_user
+                        id: data.id
                     })
                     var formChild2 = document.getElementById('root').firstChild.nextSibling;
                     formChild2.style.display = 'none';
@@ -93,8 +99,11 @@ class ForgotPass extends React.Component {
                 } else error.innerHTML = 'Mã OTP không chính xác'
             }
         }
-        xmlHttp.open('GET', URL + '/auth/check_passwordrc?otp=' + otp, false);
-        xmlHttp.send(null)
+        xmlHttp.open('GET', URL + '/general/forgot-pass-or-change-email-verification', false);
+        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlHttp.send(
+            'otp=' + otp
+        )
     }
 
     // Nhập password mới
@@ -122,12 +131,11 @@ class ForgotPass extends React.Component {
                 }
             }
         }
-        xmlHttp.open('POST', URL + '/auth/change_password', false);
+        xmlHttp.open('POST', URL + '/general/change-pass', false);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlHttp.send(
-            'id_user=' + this.state.id
+            'id=' + this.state.id
             + '&password=' + password
-            + '&repassword=' + repassword
         )
     }
 

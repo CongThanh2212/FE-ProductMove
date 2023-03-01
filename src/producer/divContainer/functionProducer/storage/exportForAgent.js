@@ -14,8 +14,11 @@ class ExportForAgent extends React.Component {
         - changeTypeProfile: Chuyển sang xem chi tiết sản phẩm (Details)
     */
     show(event) {
-        const productId = event.parentNode.firstChild.innerHTML;
-        this.props.changeProductId(productId);
+        const id = event.parentNode.firstChild;
+        this.props.changeBatchId(id.nextSibling.innerHTML);
+        this.props.changeImportId(id.innerHTML);
+        this.props.changeProductId('');
+        this.props.changeOldId('');
         this.props.changeBackType('Xuất đi');
         this.props.changeTypeProfile('Xem');
     }

@@ -48,8 +48,11 @@ class Storage extends React.Component {
         - changeTypeProfile: Chuyển sang xem chi tiết sản phẩm (Details)
     */
     show(event) {
-        const productId = event.parentNode.firstChild.nextSibling.innerHTML;
-        this.props.changeProductId(productId);
+        const batchId = event.parentNode.firstChild.nextSibling.innerHTML;
+        this.props.changeBatchId(batchId);
+        this.props.changeImportId('');
+        this.props.changeProductId('');
+        this.props.changeOldId('');
         this.props.changeBackType('Trong kho');
         this.props.changeTypeProfile('Xem');
     }

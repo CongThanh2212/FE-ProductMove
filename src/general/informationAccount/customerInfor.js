@@ -19,7 +19,7 @@ class CustomerInfor extends React.Component {
         xmlHttp.onreadystatechange = function() {
             if (this.readyState === 4) {
                 if (this.status === 200) {
-                    const data = JSON.parse(this.responseText);
+                    const data = JSON.parse(this.responseText)[0];
                     if (data === null) return;
                     var arrInput = document.querySelectorAll('input');
 
@@ -34,7 +34,7 @@ class CustomerInfor extends React.Component {
                 }
             }
         }
-        xmlHttp.open('GET', URL + '/auth/infor_customer?id_product=' + this.props.productId, false);
+        xmlHttp.open('GET', URL + '/general/customer-profile?id=' + this.props.id + '&customerId=' + this.props.userName, false);
         xmlHttp.send(null);
     }
 
