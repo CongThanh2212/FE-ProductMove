@@ -35,8 +35,8 @@ class Received extends React.Component {
                     for (var i = 0; i < data.length; i++) {
                         if (data[i] === null) continue;
                         var tr = document.createElement('tr');
-                        var oldBatchId = document.createElement('td');
-                        oldBatchId.className = 'columnId';
+                        var oldOrFailId = document.createElement('td');
+                        oldOrFailId.className = 'columnId';
                         var importBatchId = document.createElement('td');
                         importBatchId.className = 'columnId';
                         var batchId = document.createElement('td');
@@ -47,8 +47,8 @@ class Received extends React.Component {
                         var status = document.createElement('td');
                         var description = document.createElement('td');
 
-                        if (data[i].oldBatchId) oldBatchId.innerHTML = data[i].oldBatchId;
-                        else oldBatchId.innerHTML = '';
+                        if (data[i].oldBatchId) oldOrFailId.innerHTML = data[i].oldBatchId;
+                        else if (data[i].productId) oldOrFailId.innerHTML = data[i].productId;
 
                         if (data[i].importBatchId) importBatchId.innerHTML = data[i].importBatchId;
                         else importBatchId.innerHTML = '';
@@ -63,13 +63,13 @@ class Received extends React.Component {
                         else capacity.innerHTML = '';
 
                         if (data[i].amount) amount.innerHTML = data[i].amount;
-                        else amount.innerHTML = '';
+                        else amount.innerHTML = '1';
                         
                         if (data[i].status === 'send_fail' || data[i].status === 'received_fail') status.innerHTML = 'Lỗi';
                         else status.innerHTML = 'Cũ';
                         description.innerHTML = 'Xem';
 
-                        tr.appendChild(oldBatchId);
+                        tr.appendChild(oldOrFailId);
                         tr.appendChild(importBatchId);
                         tr.appendChild(batchId);
                         tr.appendChild(name);
@@ -98,7 +98,7 @@ class Received extends React.Component {
                 <caption>Sản phẩm lỗi - cũ đã nhận</caption>
                 <thead>
                     <tr>
-                        <th className="columnId">oldBatchId</th>
+                        <th className="columnId">old/productId</th>
                         <th className="columnId">importBatchId</th>
                         <th className="columnId">batchId</th>
                         <th>Tên</th>

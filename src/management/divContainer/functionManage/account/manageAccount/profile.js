@@ -63,7 +63,7 @@ class Profile extends React.Component {
                 }
             }
         }
-        xmlHttp.open('GET', URL + '/management/profile-by-username?id=' + this.props.id + '&userName' + this.props.userName, false);
+        xmlHttp.open('GET', URL + '/management/profile-by-username?id=' + this.props.id + '&userName=' + this.props.userName, false);
         xmlHttp.send(null);
     }
 

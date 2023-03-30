@@ -41,9 +41,9 @@ class CreateAccount extends React.Component {
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlHttp.send(
             'id=' + this.props.id
-            + 'userName=' + username
+            + '&userName=' + username
             + '&password=' + password
-            + '&user_type=' + user_type
+            + '&type=' + user_type
         )
     }
 

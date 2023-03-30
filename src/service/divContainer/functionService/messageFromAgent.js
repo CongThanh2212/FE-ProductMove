@@ -16,7 +16,7 @@ class MessageFromAgent extends React.Component {
         const parent = event.parentNode;
         const xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function() {
-            if (this.responseText === 4) {
+            if (this.readyState === 4) {
                 if (this.status === 200) {
                     alert('Nhận sản phẩm thành công!\nSản phẩm đã được chuyển vào trong kho');
                     var tbody = document.querySelector('tbody');
@@ -30,7 +30,7 @@ class MessageFromAgent extends React.Component {
             'serviceId=' + this.props.id
             + '&productId=' + parent.firstChild.innerHTML
             + '&numberOfService=' + parent.lastChild.previousSibling.previousSibling.innerHTML
-            + '&date' + document.getElementById('date').value
+            + '&date=' + document.getElementById('date').value
         );
     }
 

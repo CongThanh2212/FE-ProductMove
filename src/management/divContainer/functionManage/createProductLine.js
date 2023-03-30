@@ -7,6 +7,7 @@ class CreateProductLine extends React.Component {
         super(props);
         this.addCapacity = this.addCapacity.bind(this);
         this.delCapacity = this.delCapacity.bind(this);
+        this.create = this.create.bind(this);
     }
 
     // Lấy ra các thông tin user nhập thực hiện kiểm tra và gửi request tạo product line
@@ -45,7 +46,7 @@ class CreateProductLine extends React.Component {
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlHttp.send(
             'id=' + this.props.id
-            + 'name=' + productLine
+            + '&name=' + productLine
             + '&WM=' + wm
             + '&arrCapacity=' + capacities
         )
@@ -76,8 +77,8 @@ class CreateProductLine extends React.Component {
                 <input type='text' placeholder='Tên dòng sản phẩm'></input>
                 <input type='text' placeholder='Số tháng bảo hành'></input>
                 <input type='text' placeholder='Dung lượng'></input>
-                <i class="fas fa-plus-circle" onClick={this.addCapacity}></i>
-                <i class="fas fa-minus-circle" onClick={this.delCapacity}></i>
+                <i className="fas fa-plus-circle" onClick={this.addCapacity}></i>
+                <i className="fas fa-minus-circle" onClick={this.delCapacity}></i>
                 <span className='errProfile'></span>
                 <input type='submit' value='Tạo'></input>
             </form>

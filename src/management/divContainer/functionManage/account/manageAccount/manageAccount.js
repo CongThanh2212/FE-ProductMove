@@ -56,8 +56,8 @@ class ManageAccount extends React.Component {
                             }
                         }
 
-                        if (data[i].cfEmail === 0) cf_email = 'Chưa xác minh';
-                        else cf_email = 'Đã xác minh'; 
+                        if (data[i].cfEmail === 0) cf_email.innerHTML = 'Chưa xác minh';
+                        else cf_email.innerHTML = 'Đã xác minh'; 
                         description.innerHTML = "Xem";
 
                         tr.appendChild(username);

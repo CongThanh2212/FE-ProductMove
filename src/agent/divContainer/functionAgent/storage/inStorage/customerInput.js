@@ -25,11 +25,11 @@ class CustomerInput extends React.Component {
         var products = document.querySelectorAll("tr");
         if (products.length === 1) error.innerHTML = 'Bạn đã bỏ chọn hết sản phẩm';
         else {
-            var arrInput = document.querySelectorAll('input');
+            var form = document.querySelector(".createAccount");
             var arrProduct = [];
             var index = 0;
             for (var i = 1; i < products.length; i++) {
-                const amountSell = products[i].firstChild.value;
+                const amountSell = products[i].firstChild.firstChild.value;
                 if (!amountSell) {
                     error.innerHTML = 'Chưa nhập số lượng bán';
                     return;
@@ -42,7 +42,9 @@ class CustomerInput extends React.Component {
                 const amountNow = products[i].lastChild.previousSibling.previousSibling.previousSibling.innerHTML;
                 const batch = products[i].lastChild.previousSibling.previousSibling.innerHTML;
                 const producerId = products[i].lastChild.previousSibling.innerHTML;
-                if (amountSell > amountNow) {
+                if (amountSell > parseInt(amountNow)) {
+                    console.log(amountSell)
+                    console.log(amountNow)
                     error.innerHTML = 'Số lượng bán vượt quá số lượng trong kho';
                     return;
                 }
@@ -76,10 +78,10 @@ class CustomerInput extends React.Component {
             xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xmlHttp.send(
                 'agentId=' + this.props.id
-                + '&customerName=' + arrInput[0].value
-                + '&customerAddress=' + arrInput[1].value
-                + '&customerPhone=' + arrInput[2].value
-                + '&sellDate=' + document.getElementById('date')
+                + '&customerName=' + form.firstChild.nextSibling.value
+                + '&customerAddress=' + form.firstChild.nextSibling.nextSibling.value
+                + '&customerPhone=' + form.firstChild.nextSibling.nextSibling.nextSibling.value
+                + '&date=' + document.getElementById('date').value
                 + '&arrProduct=' + JSON.stringify(arrProduct)
             )
         }
@@ -100,11 +102,13 @@ class CustomerInput extends React.Component {
             var tr = document.createElement("tr");
             var tdNumberOfSell = document.createElement('td');
             var numberOfSell = document.createElement('input');
+            numberOfSell.setAttribute('size', '5');
             tdNumberOfSell.appendChild(numberOfSell);
             tr.appendChild(tdNumberOfSell);
 
             for (var j = 0; j < arr[i].length; j++) {
                 var td = document.createElement("td");
+                if (j === 0 || j === 1) td.className = "columnId";
                 var html = document.createTextNode(arr[i][j]);
                 td.appendChild(html);
                 tr.appendChild(td);

@@ -60,6 +60,9 @@ class FunctionAgent extends React.Component {
         this.changeProductId = this.changeProductId.bind(this);
         this.changeUserName = this.changeUserName.bind(this);
         this.changeBackType = this.changeBackType.bind(this);
+        this.changeBatchId = this.changeBatchId.bind(this);
+        this.changeImportId = this.changeImportId.bind(this);
+        this.changeOldId = this.changeOldId.bind(this);
     }
 
     changeBackType(type) {
@@ -135,7 +138,7 @@ class FunctionAgent extends React.Component {
                 changeImportId={this.changeImportId} changeProductId={this.changeProductId} changeOldId={this.changeOldId}/>
             case "Vị trí kho": return <PreliminaryInfor id={this.props.id} userName={this.state.userName} changeTypeProfile={this.props.changeType}/>
             case "Khách hàng": return <CustomerInfor id={this.props.id} userName={this.state.userName} changeTypeProfile={this.props.changeType}/>
-            case "Nhập thông tin khách hàng": return <CustomerInput arrProduct={this.props.arrProduct}
+            case "Nhập thông tin khách hàng": return <CustomerInput id={this.props.id} arrProduct={this.props.arrProduct}
                 changeTypeProfile={this.props.changeType}/>
             case "Nhập về": return <StatusStatistical id={this.props.id}/>
             case "Bán ra": return <SoldStatistical id={this.props.id}/>

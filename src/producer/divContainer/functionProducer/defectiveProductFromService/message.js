@@ -146,7 +146,7 @@ class Message extends React.Component {
                     <caption>Thông báo sản phẩm lỗi - cũ</caption>
                     <thead>
                         <tr>
-                            <th className="columnId">old/product BatchId</th>
+                            <th className="columnId">old/producId</th>
                             <th className="columnId">importBatchId</th>
                             <th className="columnId">batchId</th>
                             <th>Tên</th>

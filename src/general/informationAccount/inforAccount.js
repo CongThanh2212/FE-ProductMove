@@ -50,7 +50,7 @@ class InforAccount extends React.Component {
 
         const xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function() {
-            if (this.responseText === 4) {
+            if (this.readyState === 4) {
                 if (this.status === 200) {
                     error.innerHTML = '';
                     alert('Thay đổi thông tin thành công');

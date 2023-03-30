@@ -30,7 +30,7 @@ class ReturnProducer extends React.Component {
         xmlHttp.onreadystatechange = function() {
             if (this.readyState === 4) {
                 if (this.status === 200) {
-                    const data = JSON.parse(this.responseText).list;
+                    const data = JSON.parse(this.responseText);
                     var tbody = document.querySelector('tbody');
                     for (var i = 0; i < data.length; i++) {
                         if (data[i] === null) continue;

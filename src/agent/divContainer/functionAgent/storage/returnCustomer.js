@@ -70,7 +70,7 @@ class ReturnCustomer extends React.Component {
                         var capacity = document.createElement('td');
                         var numberOfService = document.createElement('td');
                         var cusId = document.createElement('td');
-                        cusId.style.hidden = true;
+                        cusId.setAttribute("hidden", "true");
                         var description = document.createElement('td');
                         var returnCus = document.createElement('td');
 

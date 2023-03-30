@@ -49,6 +49,9 @@ class FunctionService extends React.Component {
         this.changeProductId = this.changeProductId.bind(this);
         this.changeUserName = this.changeUserName.bind(this);
         this.changeBackType = this.changeBackType.bind(this);
+        this.changeBatchId = this.changeBatchId.bind(this);
+        this.changeImportId = this.changeImportId.bind(this);
+        this.changeOldId = this.changeOldId.bind(this);
     }
 
     changeBackType(type) {

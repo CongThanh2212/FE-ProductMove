@@ -22,7 +22,7 @@ class Details extends React.Component {
         // Lấy value mục status để xác định xem là khách hàng hay là kho => Gửi request tương ứng
         var status = event.parentNode.firstChild.innerHTML;
         switch (status) {
-            case 'Đã bán': case 'Lỗi cần triệu hồi': case 'Đã trả lại cho khách hàng': {
+            case 'Bán cho KH': case 'Trả lại KH': {
                 this.props.changeUserName(event.parentNode.lastChild.previousSibling.innerHTML);
                 this.props.changeTypeProfile("Khách hàng");
                 break;
@@ -38,10 +38,10 @@ class Details extends React.Component {
     // Lấy ra thông tin chi tiết + lịch sử của sản phẩm
     componentDidMount() {
         var root = this;
-        var link;
-        if (this.props.importId) link += '&import=' + this.props.importId;
-        if (this.props.productId) link += '&pr=' + this.props.productId;
-        if (this.props.oldId) link += '&old=' + this.props.oldId;
+        var link = '';
+        if (this.props.importId !== '') link = link + '&import=' + this.props.importId;
+        if (this.props.productId !== '') link = link +  '&pr=' + this.props.productId;
+        if (this.props.oldId !== '') link = link +  '&old=' + this.props.oldId;
         // Thông tin chi tiết sản phẩm
         const xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function() {
@@ -54,7 +54,7 @@ class Details extends React.Component {
                     arrInput[0].value = info.productLine;
                     arrInput[1].value = info.capacity;
                     arrInput[2].value = info.color;
-                    arrInput[3].value = info.DOM;
+                    arrInput[3].value = info.DOM.split("T")[0];
                     arrInput[4].value = info.WM + ' tháng';
                     arrInput[5].value = info.batchNumber;
 
@@ -78,12 +78,12 @@ class Details extends React.Component {
                         var status = document.createElement('td');
                         var time = document.createElement('td');
                         var name = document.createElement('td');
-                        name.style.hidden = true;
                         var locationId = document.createElement('td');
+                        locationId.style.display = 'none';
                         var show = document.createElement('td');
 
                         status.innerHTML = his[i].status;
-                        time.innerHTML = his[i].date;
+                        time.innerHTML = his[i].date.split("T")[0];
                         name.innerHTML = his[i].name;
                         locationId.innerHTML = his[i].locationId;
                         show.innerHTML = 'Xem';

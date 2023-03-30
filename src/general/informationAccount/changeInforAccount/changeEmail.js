@@ -70,7 +70,7 @@ class ChangeEmail extends React.Component {
         xmlHttp.open('POST', URL + '/general/forgot-pass-or-change-email-verification', false);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlHttp.send(
-            + 'otp=' + otp
+            'otp=' + otp
         )
     }
 

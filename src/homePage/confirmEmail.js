@@ -46,14 +46,16 @@ class ConfirmEmail extends React.Component {
         xmlHttp.onreadystatechange = function() {
             if (this.readyState === 4) {
                 if (this.status === 200) {
+                    const data = JSON.parse(this.responseText);
+                    if (!data.access) {
+                        error.innerHTML = data.mess;
+                        return;
+                    }
                     alert('Mã OTP đã được gửi đến email của bạn');
                     // Thành công thì ẩn UI hiện tại và hiển thị UI bước tiếp theo
                     var formChild1 = document.getElementById('root').firstChild;
                     formChild1.style.display = 'none';
                     formChild1.nextSibling.style.display = 'block';
-                } else {
-                    const data = JSON.parse(this.responseText);
-                    error.innerHTML = data.errorMessage;
                 }
             }
         }
@@ -80,11 +82,16 @@ class ConfirmEmail extends React.Component {
         xmlHttp.onreadystatechange = function() {
             if (this.readyState === 4) {
                 if (this.status === 200) {
+                    const data = JSON.parse(this.responseText);
+                    if (!data.access) {
+                        error.innerHTML = data.mess;
+                        return;
+                    }
                     // Thành công thì thay đổi giá trị biến state là confirm sang true
                     root.setState({
                         confirm: true
                     })
-                } else error.innerHTML = 'Mã OTP không chính xác' // Không thành công thì hiển thị lỗi
+                }
             }
         }
         xmlHttp.open('POST', URL + '/general/verification-and-update-email', false);
