@@ -7,13 +7,10 @@ class Statistical extends React.Component {
     constructor(props) {
         super(props);
         this.changeShow = this.changeShow.bind(this);
-        this.serviceAndQuarter = this.serviceAndQuarter.bind(this);
         this.serviceAndYear = this.serviceAndYear.bind(this);
         this.fixedAndMonth = this.fixedAndMonth.bind(this);
-        this.fixedAndQuarter = this.fixedAndQuarter.bind(this);
         this.fixedAndYear = this.fixedAndYear.bind(this);
         this.failAndMonth = this.failAndMonth.bind(this);
-        this.failAndQuarter = this.failAndQuarter.bind(this);
         this.failAndYear = this.failAndYear.bind(this);
     }
 
@@ -25,7 +22,6 @@ class Statistical extends React.Component {
             case 'service': {
                 switch(time) {
                     case 'month': this.componentDidMount(); break;
-                    case 'quarter': this.serviceAndQuarter(); break;
                     default: this.serviceAndYear();
                 }
                 break;
@@ -33,7 +29,6 @@ class Statistical extends React.Component {
             case 'fixed': {
                 switch(time) {
                     case 'month': this.fixedAndMonth(); break;
-                    case 'quarter': this.fixedAndQuarter(); break;
                     default: this.fixedAndYear();
                 }
                 break;
@@ -41,60 +36,10 @@ class Statistical extends React.Component {
             default: {
                 switch(time) {
                     case 'month': this.failAndMonth(); break;
-                    case 'quarter': this.failAndQuarter(); break;
                     default: this.failAndYear();
                 }
             }
         }
-    }
-
-    // Thống kê theo các sản phẩm cần bảo hành theo quý
-    serviceAndQuarter() {
-        const xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function() {
-            if (this.readyState === 4) {
-                if (this.status === 200) {
-                    const data = JSON.parse(this.responseText).list;
-                    var divChart = document.getElementById("chart");
-                    // 2 mảng lưu trữ quý/năm và số lượng sản phẩm quý/năm mà server gửi về
-                    var arrQuarter = [];
-                    var arrAmount = [];
-                    // Nếu server trả về data rỗng thì xóa vùng chưa biểu đồ
-                    if (data.length === 0) {
-                        if (divChart.firstChild) divChart.removeChild(divChart.firstChild);
-                        return;
-                    }
-                    for (var i = 0; i < data.length; i++) {
-                        arrQuarter[i] = data[i].quarter + '/' + data[i].year;
-                        arrAmount[i] = data[i].amount;
-                    }
-                    var ctx = document.createElement("canvas");
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: arrQuarter,
-                            datasets: [{
-                                label: 'Số lượng',
-                                data: arrAmount,
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                        scales: {
-                            y: {
-                            beginAtZero: true
-                            }
-                        }
-                        }
-                    });
-                    ctx.style.display = 'inline';
-                    if (divChart.firstChild) divChart.removeChild(divChart.firstChild);
-                    divChart.appendChild(ctx);
-                }
-            }
-        }
-        xmlHttp.open('GET', URL + '/auth/list_quarter_erservice?id_user=' + this.props.id, false);
-        xmlHttp.send(null);
     }
 
     // Thống kê theo các sản phẩm cần bảo hành theo năm
@@ -141,7 +86,7 @@ class Statistical extends React.Component {
                 }
             }
         }
-        xmlHttp.open('GET', URL + '/auth/list_year_erservice?id_user=' + this.props.id, false);
+        xmlHttp.open('GET', URL + '/service/statistical-need-fix-by-year?serviceId=' + this.props.id, false);
         xmlHttp.send(null);
     }
 
@@ -192,58 +137,7 @@ class Statistical extends React.Component {
                 }
             }
         }
-        xmlHttp.open('GET', URL + '/service/list_month_fixedproduct?id_user=' + this.props.id, false);
-        xmlHttp.send(null);
-    }
-
-    // Thống kê sản phẩm bảo hành thành công theo quý
-    fixedAndQuarter() {
-        const xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function() {
-            if (this.readyState === 4) {
-                if (this.status === 200) {
-                    const data = JSON.parse(this.responseText).list;
-                    var divChart = document.getElementById("chart");
-                    // 2 mảng lưu trữ quý/năm và số lượng sản phẩm từng quý/năm mà server trả về
-                    var arrQuarter = [];
-                    var arrAmount = [];
-                    // Nếu server trả về data rỗng thì xóa vùng chưa biểu đồ
-                    if (data.length === 0) {
-                        if (divChart.firstChild) divChart.removeChild(divChart.firstChild);
-                        return;
-                    }
-                    else {
-                        for (var i = 0; i < data.length; i++) {
-                            arrQuarter[i] = data[i].quarter + '/' + data[i].year;
-                            arrAmount[i] = data[i].amount;
-                        }
-                    }
-                    var ctx = document.createElement("canvas");
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: arrQuarter,
-                            datasets: [{
-                                label: 'Số lượng',
-                                data: arrAmount,
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                        scales: {
-                            y: {
-                            beginAtZero: true
-                            }
-                        }
-                        }
-                    });
-                    ctx.style.display = 'inline';
-                    if (divChart.firstChild) divChart.removeChild(divChart.firstChild);
-                    divChart.appendChild(ctx);
-                }
-            }
-        }
-        xmlHttp.open('GET', URL + '/service/list_quarter_fixedproduct?id_user=' + this.props.id, false);
+        xmlHttp.open('GET', URL + '/service/statistical-fixed-by-month?serviceId=' + this.props.id, false);
         xmlHttp.send(null);
     }
 
@@ -291,7 +185,7 @@ class Statistical extends React.Component {
                 }
             }
         }
-        xmlHttp.open('GET', URL + '/service/list_year_fixedproduct?id_user=' + this.props.id, false);
+        xmlHttp.open('GET', URL + '/service/statistical-fixed-by-year?serviceId=' + this.props.id, false);
         xmlHttp.send(null);
     }
 
@@ -342,58 +236,7 @@ class Statistical extends React.Component {
                 }
             }
         }
-        xmlHttp.open('GET', URL + '/service/list_month_failproduct?id_user=' + this.props.id, false);
-        xmlHttp.send(null);
-    }
-
-    // Thống kê sản phẩm bảo hành thất bại theo quý
-    failAndQuarter() {
-        const xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function() {
-            if (this.readyState === 4) {
-                if (this.status === 200) {
-                    const data = JSON.parse(this.responseText).list;
-                    var divChart = document.getElementById("chart");
-                    // 2 mảng lưu trữ quý/năm và số lượng sản phẩm từng quý/năm mà server trả về
-                    var arrQuarter = [];
-                    var arrAmount = [];
-                    // Nếu server trả về data rỗng thì xóa vùng chưa biểu đồ
-                    if (data.length === 0) {
-                        if (divChart.firstChild) divChart.removeChild(divChart.firstChild);
-                        return;
-                    }
-                    else {
-                        for (var i = 0; i < data.length; i++) {
-                            arrQuarter[i] = data[i].quarter + '/' + data[i].year;
-                            arrAmount[i] = data[i].amount;
-                        }
-                    }
-                    var ctx = document.createElement("canvas");
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: arrQuarter,
-                            datasets: [{
-                                label: 'Số lượng',
-                                data: arrAmount,
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                        scales: {
-                            y: {
-                            beginAtZero: true
-                            }
-                        }
-                        }
-                    });
-                    ctx.style.display = 'inline';
-                    if (divChart.firstChild) divChart.removeChild(divChart.firstChild);
-                    divChart.appendChild(ctx);
-                }
-            }
-        }
-        xmlHttp.open('GET', URL + '/service/list_quarter_failproduct?id_user=' + this.props.id, false);
+        xmlHttp.open('GET', URL + '/service/statistical-fail-by-month?serviceId=' + this.props.id, false);
         xmlHttp.send(null);
     }
 
@@ -441,7 +284,7 @@ class Statistical extends React.Component {
                 }
             }
         }
-        xmlHttp.open('GET', URL + '/service/list_year_failproduct?id_user=' + this.props.id, false);
+        xmlHttp.open('GET', URL + '/service/statistical-fail-by-year?serviceId=' + this.props.id, false);
         xmlHttp.send(null);
     }
 
@@ -492,7 +335,7 @@ class Statistical extends React.Component {
                 }
             }
         }
-        xmlHttp.open('GET', URL + '/auth/list_month_erservice?id_user=' + this.props.id, false);
+        xmlHttp.open('GET', URL + '/service/statistical-need-fix-by-month?serviceId=' + this.props.id, false);
         xmlHttp.send(null);
     }
     
@@ -513,7 +356,6 @@ class Statistical extends React.Component {
                     </select>
                     <select id="statisticalTime" onChange={this.changeShow}>
                         <option value="month">Tháng</option>
-                        <option value="quarter">Quý</option>
                         <option value="year">Năm</option>
                     </select>
                 </div>

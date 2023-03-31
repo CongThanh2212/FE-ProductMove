@@ -79,7 +79,14 @@ class MenuManage extends React.Component {
                             <li onClick={this.showChange} onMouseOver={this.hover} onMouseOut={this.unHover}>Quản lý</li>
                         </ul>
                     </li>
-                    <li onClick={this.showChange} onMouseOver={this.hover} onMouseOut={this.unHover}>Thống kê</li>
+                    <li>
+                        <a href="#!" onClick={this.show} onMouseOver={this.hover} onMouseOut={this.unHover}>Thống kê</a>
+                        <ul>
+                            <li onClick={this.showChange} onMouseOver={this.hover} onMouseOut={this.unHover}>CSSX</li>
+                            <li onClick={this.showChange} onMouseOver={this.hover} onMouseOut={this.unHover}>Đại lý</li>
+                            <li onClick={this.showChange} onMouseOver={this.hover} onMouseOut={this.unHover}>TTBH</li>
+                        </ul>
+                    </li>
                     <li>
                         <a href="#!" onClick={this.show} onMouseOver={this.hover} onMouseOut={this.unHover}>Tài khoản</a>
                         <ul>

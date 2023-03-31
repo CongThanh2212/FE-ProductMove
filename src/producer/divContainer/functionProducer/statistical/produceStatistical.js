@@ -8,7 +8,6 @@ class ProduceStatistical extends React.Component {
         super(props);
         this.changeStatisticalType = this.changeStatisticalType.bind(this);
         this.year = this.year.bind(this);
-        this.quarter = this.quarter.bind(this);
     }
 
     // Thay đổi kiểu thống kê
@@ -19,12 +18,8 @@ class ProduceStatistical extends React.Component {
                 this.componentDidMount();
                 break;
             }
-            case "year": {
-                this.year();
-                break;
-            }
             default: {
-                this.quarter();
+                this.year();
             }
         }
     }
@@ -72,58 +67,7 @@ class ProduceStatistical extends React.Component {
                 }
             }
         }
-        xmlHttp.open('GET', URL + '/factory/list_year_newproduct?id_user=' + this.props.id, false);
-        xmlHttp.send(null);
-    }
-
-    // Thống kê theo quý
-    quarter() {
-        const xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function() {
-            if (this.readyState === 4) {
-                if (this.status === 200) {
-                    const data = JSON.parse(this.responseText).list;
-                    var divChart = document.getElementById("chart");
-                    // 2 mảng lưu trữ quý/năm và số lượng sản phẩm từng quý/năm mà server trả về
-                    var arrQuarter = [];
-                    var arrAmount = [];
-                    // Nếu server trả về data rỗng thì xóa vùng chưa biểu đồ
-                    if (data.length === 0) {
-                        if (divChart.firstChild) divChart.removeChild(divChart.firstChild);
-                        return;
-                    }
-                    else {
-                        for (var i = 0; i < data.length; i++) {
-                            arrQuarter[i] = data[i].quarter + '/' + data[i].year;
-                            arrAmount[i] = data[i].amount;
-                        }
-                    }
-                    var ctx = document.createElement("canvas");
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: arrQuarter,
-                            datasets: [{
-                                label: 'Số lượng',
-                                data: arrAmount,
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                        scales: {
-                            y: {
-                            beginAtZero: true
-                            }
-                        }
-                        }
-                    });
-                    ctx.style.display = 'inline';
-                    if (divChart.firstChild) divChart.removeChild(divChart.firstChild);
-                    divChart.appendChild(ctx);
-                }
-            }
-        }
-        xmlHttp.open('GET', URL + '/factory/list_quarter_newproduct?id_user=' + this.props.id, false);
+        xmlHttp.open('GET', URL + '/producer/statistical-produce-by-year?producerId=' + this.props.id, false);
         xmlHttp.send(null);
     }
 
@@ -174,7 +118,7 @@ class ProduceStatistical extends React.Component {
                 }
             }
         }
-        xmlHttp.open('GET', URL + '/factory/list_month_newproduct?id_user=' + this.props.id, false);
+        xmlHttp.open('GET', URL + '/producer/statistical-produce-by-month?producerId=' + this.props.id, false);
         xmlHttp.send(null);
     }
 
@@ -190,7 +134,6 @@ class ProduceStatistical extends React.Component {
                     <label htmlFor='statisticalType'>Thống kê theo:  </label>
                     <select id="statisticalType" onChange={this.changeStatisticalType}>
                         <option value="month">Tháng</option>
-                        <option value="quarter">Quý</option>
                         <option value="year">Năm</option>
                     </select>
                 </div>

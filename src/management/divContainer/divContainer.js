@@ -3,7 +3,9 @@ import ProductLine from "./functionManage/productLine"
 import CreateAccount from "./functionManage/account/createAccount"
 import ManageAccount from "./functionManage/account/manageAccount/manageAccount"
 import CreateProductLine from "./functionManage/createProductLine"
-import Statistical from "./functionManage/statistical";
+import ProducerStatistical from "./functionManage/statistical/producerStatistical"
+import AgentStatistical from "./functionManage/statistical/agentStatistical"
+import ServiceStatistical from "./functionManage/statistical/serviceStatistical"
 import Profile from "./functionManage/account/manageAccount/profile"
 import InforAccount from "../../general/informationAccount/inforAccount"
 import ChangeEmail from "../../general/informationAccount/changeInforAccount/changeEmail"
@@ -78,7 +80,9 @@ class FunctionManage extends React.Component {
             case "Quản lý": return <ManageAccount changeTypeProfile={this.props.changeType} id={this.props.id}
                 changeUserName={this.changeUserName}/>
             case "Thêm dòng sản phẩm": return <CreateProductLine id={this.props.id}/>
-            case "Thống kê": return <Statistical id={this.props.id}/>
+            case "CSSX": return <ProducerStatistical id={this.props.id}/>
+            case "Đại lý": return <AgentStatistical id={this.props.id}/>
+            case "TTBH": return <ServiceStatistical id={this.props.id}/>
             case "Xem": return <Details changeTypeProfile={this.props.changeType} 
                 productId={this.state.productId} changeUserName={this.changeUserName} backType={this.state.backType}/>
             case "Vị trí kho": return <PreliminaryInfor userName={this.state.userName} changeTypeProfile={this.props.changeType}/>
