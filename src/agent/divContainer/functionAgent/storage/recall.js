@@ -109,7 +109,6 @@ class Recall extends React.Component {
             xmlHttp.send(
                 'agentId=' + this.props.id
                 + '&serviceName=' + serviceName
-                + '&date=' + document.getElementById('date')
                 + '&arrProduct=' + JSON.stringify(arrProduct)
             )
         }
@@ -221,7 +220,6 @@ class Recall extends React.Component {
                         </form>
                     </div>
                 </div>
-                <input type='date' id='date'></input>
             </Fragment>
         )
     }

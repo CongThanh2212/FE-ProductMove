@@ -85,7 +85,6 @@ class Storage extends React.Component {
             xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xmlHttp.send(
                 'agentId=' + this.props.id
-                + '&date=' + document.getElementById('date').value
                 + '&arrProduct=' + JSON.stringify(arrProduct)
             )
         }
@@ -153,9 +152,8 @@ class Storage extends React.Component {
                         var wm = document.createElement('td');
                         var amount = document.createElement('td');
                         var batch = document.createElement('td');
-                        batch.style.hidden = true;
                         var producerId = document.createElement('td');
-                        producerId.style.hidden = true;
+                        producerId.style.display = 'none';
                         var description = document.createElement('td');
 
                         checkbox.appendChild(input);
@@ -226,7 +224,6 @@ class Storage extends React.Component {
                         <label htmlFor="select">Trả lại cơ sở sản xuất: </label>
                         <span className='errRepair1'></span>
                         <input type='submit' value='Trả lại'></input>
-                        <input type='date' id="date"></input>
                     </form>
                     <form className="repair" onSubmit={this.customerInput}>
                         <label htmlFor="select">Nhập thông tin khách hàng mua: </label>

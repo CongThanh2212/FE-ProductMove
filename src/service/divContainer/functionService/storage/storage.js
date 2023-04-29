@@ -47,7 +47,6 @@ class Storage extends React.Component {
             'serviceId=' +  this.props.id
             + '&producerId=' + producerId
             + '&productId=' + prId
-            + '&date=' + document.getElementById('date').value
         )
     }
 
@@ -74,7 +73,6 @@ class Storage extends React.Component {
             'serviceId=' + this.props.id
             + '&agentId=' + agentId
             + '&productId=' + prId
-            + '&date=' + document.getElementById('date').value
             + '&numberOfService=' + numberOfService
         )
     }
@@ -178,7 +176,6 @@ class Storage extends React.Component {
                     <tbody>
                     </tbody>
                 </table>
-                <input type='date' id='date'></input>
             </Fragment>
         )
     }

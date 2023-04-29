@@ -57,9 +57,9 @@ class CreateAccount extends React.Component {
                 <input type='password' name='repassWord' placeholder='Nhập lại mật khẩu'></input>
                 <label htmlFor='type'>Loại tài khoản:  </label>
                 <select id="type">
-                    <option value='pu'>Cơ sở sản xuất</option>
+                    <option value='pr'>Cơ sở sản xuất</option>
                     <option value='ag'>Đại lý phân phối</option>
-                    <option value='sc'>Trung tâm bảo hành</option>
+                    <option value='sv'>Trung tâm bảo hành</option>
                 </select>
                 <span className='errProfile'></span>
                 <input type='submit' value='Tạo'></input>

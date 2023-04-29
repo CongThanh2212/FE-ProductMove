@@ -119,7 +119,6 @@ class Sold extends React.Component {
             xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xmlHttp.send(
                 'agentId=' + this.props.id
-                + '&date=' + document.getElementById('date').value
                 + '&arrProduct=' + JSON.stringify(arrProduct)
             )
         }
@@ -190,7 +189,6 @@ class Sold extends React.Component {
             xmlHttp.send(
                 'agentId=' + this.props.id
                 + '&serviceName=' + serviceName
-                + '&date=' + document.getElementById('date').value
                 + '&arrProduct=' + JSON.stringify(arrProduct)
             )
         }
@@ -232,9 +230,9 @@ class Sold extends React.Component {
                         var capacity = document.createElement('td');
                         var numberOfService = document.createElement('td');
                         var batch = document.createElement('td');
-                        batch.style.hidden = true;
+                        batch.style.display = 'none';
                         var producerId = document.createElement('td');
-                        producerId.style.hidden = true;
+                        producerId.style.display = 'none';
                         var description = document.createElement('td');
 
                         checkbox.appendChild(input);
@@ -317,7 +315,6 @@ class Sold extends React.Component {
                         </form>
                     </div>
                 </div>
-                <input type='date' id='date'></input>
             </Fragment>
         )
     }

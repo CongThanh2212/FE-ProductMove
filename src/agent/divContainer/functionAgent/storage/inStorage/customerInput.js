@@ -81,7 +81,6 @@ class CustomerInput extends React.Component {
                 + '&customerName=' + form.firstChild.nextSibling.value
                 + '&customerAddress=' + form.firstChild.nextSibling.nextSibling.value
                 + '&customerPhone=' + form.firstChild.nextSibling.nextSibling.nextSibling.value
-                + '&date=' + document.getElementById('date').value
                 + '&arrProduct=' + JSON.stringify(arrProduct)
             )
         }
@@ -157,7 +156,6 @@ class CustomerInput extends React.Component {
                         <input type='submit' value='Xong'></input>
                     </form>
                 </div>
-                <input type='date' id="date"></input>
                 <i className='fas fa-arrow-circle-left' onClick={this.back}></i>
             </Fragment>
         )

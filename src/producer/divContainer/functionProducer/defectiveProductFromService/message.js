@@ -28,13 +28,11 @@ class Message extends React.Component {
             xmlHttp.send(
                 'producerId=' + this.props.id
                 + '&productId=' + event.parentNode.firstChild.innerHTML
-                + '&date=' + document.getElementById('date').value
             );
         } else {
             xmlHttp.send(
                 'producerId=' + this.props.id
                 + '&oldBatchId=' + event.parentNode.firstChild.innerHTML
-                + '&date=' + document.getElementById('date').value
             );
         }
         var tr = event.parentNode;
@@ -160,7 +158,6 @@ class Message extends React.Component {
                     <tbody>
                     </tbody>
                 </table>
-                <input type='date' id='date'></input>
             </Fragment>
         )
     }

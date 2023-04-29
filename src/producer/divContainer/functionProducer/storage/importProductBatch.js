@@ -29,9 +29,8 @@ class ImportProductBatch extends React.Component {
         var dom = document.getElementById("dom");
         var tos = document.getElementById("tos");
         var capacity = document.getElementById("capacity");
-        var date = document.getElementById("bio");
 
-        if (!batch.value || !name.value || !color.value || !amount.value || !dom.value || !tos.value || !capacity.value || !date.value) {
+        if (!batch.value || !name.value || !color.value || !amount.value || !dom.value || !tos.value || !capacity.value) {
             error.innerHTML = 'Bạn chưa nhập đầy đủ thông tin';
             return;
         }
@@ -44,7 +43,6 @@ class ImportProductBatch extends React.Component {
         var tdDom = document.createElement("td");
         var tdTos = document.createElement("td");
         var tdCapacity = document.createElement("td");
-        var tdDate = document.createElement("td");
         var tdDelete = document.createElement("td");
 
         tdBatch.innerHTML = batch.value;
@@ -54,7 +52,6 @@ class ImportProductBatch extends React.Component {
         tdColor.innerHTML = color.value;
         tdAmount.innerHTML = amount.value;
         tdDom.innerHTML = dom.value;
-        tdDate.innerHTML = date.value;
         tdDelete.innerHTML = "Bỏ";
 
         tr.appendChild(tdBatch);
@@ -64,7 +61,6 @@ class ImportProductBatch extends React.Component {
         tr.appendChild(tdColor);
         tr.appendChild(tdAmount);
         tr.appendChild(tdDom);
-        tr.appendChild(tdDate);
         tr.appendChild(tdDelete);
 
         document.querySelector(".tableProductLine > tbody").appendChild(tr);
@@ -97,7 +93,6 @@ class ImportProductBatch extends React.Component {
             const color = arrTr[i].firstChild.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML;
             const amount = arrTr[i].firstChild.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML;
             const dom = arrTr[i].firstChild.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML;
-            const date = arrTr[i].firstChild.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML;
         
             arrBatch[i - 1] = {
                 batchNumber: batch,
@@ -106,8 +101,7 @@ class ImportProductBatch extends React.Component {
                 capacity: capacity,
                 color: color,
                 DOM: dom,
-                WM: tos,
-                date: date 
+                WM: tos
             }
         }
         if (arrTr.length === 1) error1.innerHTML = 'Chưa có sản phẩm nào';
@@ -212,7 +206,6 @@ class ImportProductBatch extends React.Component {
                             <th>Màu sắc</th>
                             <th>Số lượng</th>
                             <th>NSX</th>
-                            <th>Date</th>
                             <th>Bỏ chọn</th>
                         </tr>
                     </thead>
@@ -253,9 +246,6 @@ class ImportProductBatch extends React.Component {
 
                         <label htmlFor='dom'>NSX</label>
                         <input type='date' id='dom'></input>
-
-                        <label htmlFor='bio'>Date</label>
-                        <input type='date' id='bio'></input>
 
                         <span className='errProfile'></span>
                         <input type='submit' value='Thêm'></input>

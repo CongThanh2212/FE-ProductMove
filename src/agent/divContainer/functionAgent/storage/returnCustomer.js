@@ -29,7 +29,6 @@ class ReturnCustomer extends React.Component {
             + '&productId=' + parent.firstChild.innerHTML
             + '&numberOfService=' + parent.lastChild.previousSibling.previousSibling.previousSibling.innerHTML
             + '&customerId=' + parent.lastChild.previousSibling.previousSibling.innerHTML
-            + '&date=' + document.getElementById('date').value
         )
     }
 
@@ -134,7 +133,6 @@ class ReturnCustomer extends React.Component {
                     <tbody>
                     </tbody>
                 </table>
-                <input type='date' id='date'></input>
             </Fragment>
         )
     }

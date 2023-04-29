@@ -30,7 +30,6 @@ class MessageFromAgent extends React.Component {
             'serviceId=' + this.props.id
             + '&productId=' + parent.firstChild.innerHTML
             + '&numberOfService=' + parent.lastChild.previousSibling.previousSibling.innerHTML
-            + '&date=' + document.getElementById('date').value
         );
     }
 
@@ -130,7 +129,6 @@ class MessageFromAgent extends React.Component {
                     <tbody>
                     </tbody>
                 </table>
-                <input type='date' id='date'></input>
             </Fragment>
         )
     }

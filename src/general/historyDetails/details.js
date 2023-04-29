@@ -83,7 +83,13 @@ class Details extends React.Component {
                         var show = document.createElement('td');
 
                         status.innerHTML = his[i].status;
-                        time.innerHTML = his[i].date.split("T")[0];
+
+                        // edit date
+                        const currentDate = new Date (his[i].date.split("T")[0]);
+                        currentDate.setDate(currentDate.getDate() + 1);
+                        const tomorrowDate = currentDate.toISOString();
+                        time.innerHTML = tomorrowDate.split("T")[0];
+
                         name.innerHTML = his[i].name;
                         locationId.innerHTML = his[i].locationId;
                         show.innerHTML = 'Xem';

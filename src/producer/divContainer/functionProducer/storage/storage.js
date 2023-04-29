@@ -122,7 +122,6 @@ class Storage extends React.Component {
             xmlHttp.send(
                 'producerId=' + this.props.id
                 + '&agentName=' + agentName
-                + '&date=' + document.getElementById('date').value
                 + '&arrBatch=' + JSON.stringify(arrBatch)
             )
 
@@ -269,7 +268,6 @@ class Storage extends React.Component {
                         </form>
                     </div>
                 </div>
-                <input type='date' id='date'></input>
             </Fragment>
         )
     }
