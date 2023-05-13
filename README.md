@@ -46,3 +46,6 @@ Vai trò của các bên tham gia như sau:
   * Trả sản phẩm đã sửa chữa xong cho đại lý.
   * Chuyển sản phẩm bảo hành lỗi không thể sửa chữa về cơ sở sản xuất.
   * Thống kê và báo cáo số liệu sản phẩm theo từng loại (trạng thái), theo tháng, quý, năm.
+
+## Link back-end
+https://github.com/CongThanh2212/BE-ProductMove
