@@ -1,19 +1,20 @@
-# Installation
+# Front-end ProductMove Project
+## Installation
 
 ```bash
 $ npm install
 ```
 
-# Running the app
+## Running the app
 
 ```bash
 # development
 $ npm start
 ```
 
-# Description
+## Description
 
-## ProductionMove
+### ProductionMove
 ProductionMove là phần mềm được BigCorp sử dụng để theo dõi vòng đời các sản phẩm của họ. Các cơ sở sản xuất, đại lý phân phối, trung tâm bảo hành đều sử dụng ProductionMove để cộng tác trong việc phân phối và theo dõi vòng đời của sản phẩm.
 Vai trò của các bên tham gia như sau:
 
